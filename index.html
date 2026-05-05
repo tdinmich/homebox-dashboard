@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Homebox</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+    }
+
+    main {
+      width: min(900px, 92vw);
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 0.25rem;
+    }
+
+    p {
+      color: #94a3b8;
+      margin-bottom: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+
+    a {
+      display: block;
+      padding: 1.25rem;
+      border-radius: 1rem;
+      text-decoration: none;
+      color: #e5e7eb;
+      background: #1e293b;
+      border: 1px solid #334155;
+      transition: transform 0.12s ease, background 0.12s ease;
+    }
+
+    a:hover {
+      transform: translateY(-2px);
+      background: #334155;
+    }
+
+    .label {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .desc {
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>homebox</h1>
+    <p>Local tools and apps on the home server.</p>
+
+    <div class="grid">
+      <a href="http://192.168.1.20:8081/admin">
+        <div class="label">Pi-hole</div>
+        <div class="desc">DNS filtering and ad blocking</div>
+      </a>
+
+      <a href="https://192.168.1.20:9090">
+        <div class="label">Cockpit</div>
+        <div class="desc">Server admin dashboard</div>
+      </a>
+
+      <a href="http://192.168.1.20:3001">
+        <div class="label">Uptime Kuma</div>
+        <div class="desc">Service status monitoring</div>
+      </a>
+
+      <a href="http://192.168.1.20:8090">
+        <div class="label">Weight Tracker</div>
+        <div class="desc">Personal weight and BMI app</div>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

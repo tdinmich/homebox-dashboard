@@ -1,0 +1,8 @@
+.DS_Store
+.vscode/
+*.bak
+*.tmp
+.env
+.env.*
+node_modules/
+dist/
