@@ -10,7 +10,7 @@ Environment:
 - Public local URL: http://192.168.1.20
 - Caddy serves this folder using root + file_server
 - Access is LAN/Tailscale only, not public internet
-
+- Tailscale IP address: 100.78.92.57
 Rules:
 - Keep this as a simple static site unless asked otherwise.
 - Prefer plain HTML/CSS/JavaScript.
@@ -19,4 +19,4 @@ Rules:
 - Do not include secrets, PINs, API keys, or private data.
 - Keep links local/LAN-friendly.
 - Before large edits, summarize the plan.
-- After edits, summarize changed files and browser test steps.
+- After edits, summarize changed files and browser test steps.git add AGENTS.md .gitignore

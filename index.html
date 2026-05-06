@@ -4,92 +4,601 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Homebox</title>
+  <script>
+    (function () {
+      var match = document.cookie.match(/(?:^|; )homeboxTheme=(modern|retro)(?:;|$)/);
+      document.documentElement.dataset.theme = match ? match[1] : "modern";
+    }());
+  </script>
   <style>
+    :root {
+      color-scheme: dark;
+      --bg: #101318;
+      --panel: #181d24;
+      --panel-strong: #1f2630;
+      --text: #eef2f6;
+      --muted: #9aa8b7;
+      --line: #303a46;
+      --green: #78c28a;
+      --blue: #7aa7d9;
+      --yellow: #d8b85f;
+      --rose: #d88787;
+      --shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+      --body-font: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --title-font: var(--body-font);
+      --body-bg: linear-gradient(180deg, rgba(122, 167, 217, 0.10), transparent 340px), var(--bg);
+      --page-width: min(1120px, 100%);
+      --page-border: none;
+      --page-bg: transparent;
+      --page-shadow: none;
+      --hero-min-height: 13rem;
+      --title-transform: none;
+      --subtitle-color: var(--muted);
+      --status-bg: rgba(120, 194, 138, 0.11);
+      --status-border: rgba(120, 194, 138, 0.35);
+      --status-color: #c9f2d2;
+      --section-bg: rgba(24, 29, 36, 0.86);
+      --section-radius: 8px;
+      --section-shadow: var(--shadow);
+      --card-bg: var(--panel-strong);
+      --card-border: #35414f;
+      --card-radius: 8px;
+      --card-hover-bg: #27303b;
+      --card-hover-border: #55677b;
+      --icon-bg: #11161d;
+      --meta-color: #c6d0dc;
+      --toggle-bg: #11161d;
+      --toggle-border: #303a46;
+      --toggle-active-bg: #eef2f6;
+      --toggle-active-text: #101318;
+      --toggle-text: var(--text);
+      --texture: linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      --texture-size: 32px 32px;
+      --texture-mask: linear-gradient(180deg, black, transparent 72%);
+    }
+
+    html[data-theme="retro"] {
+      color-scheme: light;
+      --bg: #008080;
+      --panel: #c0c0c0;
+      --panel-strong: #ffffff;
+      --text: #000000;
+      --muted: #202020;
+      --line: #000000;
+      --green: #008000;
+      --blue: #0000cc;
+      --yellow: #808000;
+      --rose: #cc0099;
+      --shadow: 8px 8px 0 rgba(0, 0, 0, 0.45);
+      --body-font: Arial, Helvetica, sans-serif;
+      --title-font: "Times New Roman", Times, serif;
+      --body-bg:
+        linear-gradient(45deg, rgba(255, 255, 255, 0.12) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255, 255, 255, 0.12) 25%, transparent 25%),
+        var(--bg);
+      --page-width: min(1080px, calc(100% - 1rem));
+      --page-border: 4px ridge #f5f5f5;
+      --page-bg: #c0c0c0;
+      --page-shadow: var(--shadow);
+      --hero-min-height: 11rem;
+      --title-transform: uppercase;
+      --subtitle-color: #000080;
+      --status-bg: #ffff99;
+      --status-border: #000000;
+      --status-color: #000000;
+      --section-bg: #c0c0c0;
+      --section-radius: 0;
+      --section-shadow: 4px 4px 0 #000000;
+      --card-bg: #ffffff;
+      --card-border: #000000;
+      --card-radius: 0;
+      --card-hover-bg: #ffffcc;
+      --card-hover-border: #ff00cc;
+      --icon-bg: #000080;
+      --meta-color: #000080;
+      --toggle-bg: #c0c0c0;
+      --toggle-border: #000000;
+      --toggle-active-bg: #000080;
+      --toggle-active-text: #ffffff;
+      --toggle-text: #000000;
+      --texture:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.22) 1px, transparent 1px),
+        linear-gradient(rgba(0, 0, 0, 0.16) 1px, transparent 1px);
+      --texture-size: 18px 18px;
+      --texture-mask: none;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--bg);
+    }
+
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #0f172a;
-      color: #e5e7eb;
-      display: flex;
       min-height: 100vh;
-      align-items: center;
-      justify-content: center;
+      font-family: var(--body-font);
+      background: var(--body-bg);
+      color: var(--text);
     }
 
-    main {
-      width: min(900px, 92vw);
-    }
-
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 0.25rem;
-    }
-
-    p {
-      color: #94a3b8;
-      margin-bottom: 2rem;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1rem;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: var(--texture);
+      background-size: var(--texture-size);
+      -webkit-mask-image: var(--texture-mask);
+      mask-image: var(--texture-mask);
     }
 
     a {
-      display: block;
-      padding: 1.25rem;
-      border-radius: 1rem;
-      text-decoration: none;
-      color: #e5e7eb;
-      background: #1e293b;
-      border: 1px solid #334155;
-      transition: transform 0.12s ease, background 0.12s ease;
+      color: inherit;
     }
 
-    a:hover {
+    .page {
+      position: relative;
+      width: var(--page-width);
+      margin: 0 auto;
+      padding: max(1rem, env(safe-area-inset-top)) 1rem max(1.5rem, env(safe-area-inset-bottom));
+      border: var(--page-border);
+      background: var(--page-bg);
+      box-shadow: var(--page-shadow);
+    }
+
+    .hero {
+      display: grid;
+      gap: 1rem;
+      padding: 1.25rem 0 1rem;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--title-font);
+      font-size: clamp(2.35rem, 12vw, 4.6rem);
+      line-height: 0.92;
+      letter-spacing: 0;
+      text-transform: var(--title-transform);
+    }
+
+    .subtitle {
+      max-width: 42rem;
+      margin: 0;
+      color: var(--subtitle-color);
+      font-size: 1.02rem;
+      line-height: 1.55;
+    }
+
+    .title-actions {
+      display: grid;
+      justify-items: end;
+      gap: 0.65rem;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem;
+      border: 1px solid var(--toggle-border);
+      border-radius: 999px;
+      background: var(--toggle-bg);
+    }
+
+    .theme-button {
+      min-height: 2rem;
+      padding: 0.38rem 0.72rem;
+      border: 2px solid transparent;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--toggle-text);
+      font: inherit;
+      font-size: 0.86rem;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .theme-button[aria-pressed="true"] {
+      background: var(--toggle-active-bg);
+      color: var(--toggle-active-text);
+    }
+
+    .theme-button:focus-visible {
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      flex: 0 0 auto;
+      gap: 0.45rem;
+      min-height: 2.5rem;
+      padding: 0.62rem 0.82rem;
+      border: 1px solid var(--status-border);
+      border-radius: 999px;
+      background: var(--status-bg);
+      color: var(--status-color);
+      font-size: 0.9rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 5px rgba(120, 194, 138, 0.13);
+    }
+
+    .sections {
+      display: grid;
+      gap: 1rem;
+      padding-top: 0.6rem;
+    }
+
+    .section {
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: var(--section-radius);
+      background: var(--section-bg);
+      box-shadow: var(--section-shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.8rem;
+      margin-bottom: 0.85rem;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .section-count {
+      color: var(--muted);
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.85rem;
+      min-height: 6.4rem;
+      padding: 1rem;
+      border: 1px solid var(--card-border);
+      border-radius: var(--card-radius);
+      background: var(--card-bg);
+      text-decoration: none;
+      transition: border-color 0.16s ease, background 0.16s ease, transform 0.16s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .card:hover,
+    .card:focus-visible {
+      border-color: var(--card-hover-border);
+      background: var(--card-hover-bg);
       transform: translateY(-2px);
-      background: #334155;
+      outline: none;
+    }
+
+    .icon {
+      display: grid;
+      place-items: center;
+      width: 2.45rem;
+      height: 2.45rem;
+      border: 1px solid transparent;
+      border-radius: var(--card-radius);
+      background: var(--icon-bg);
+      color: var(--blue);
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .icon.monitoring {
+      color: var(--green);
+    }
+
+    .icon.admin {
+      color: var(--yellow);
+    }
+
+    .icon.apps {
+      color: var(--blue);
+    }
+
+    .icon.docs {
+      color: var(--rose);
     }
 
     .label {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.35rem;
+      display: block;
+      margin: 0 0 0.3rem;
+      font-size: 1.08rem;
+      font-weight: 800;
+      line-height: 1.2;
     }
 
     .desc {
-      color: #94a3b8;
-      font-size: 0.95rem;
+      display: block;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.42;
+    }
+
+    .meta {
+      display: block;
+      margin-top: 0.62rem;
+      color: var(--meta-color);
+      font-size: 0.78rem;
+      overflow-wrap: anywhere;
+    }
+
+    html[data-theme="retro"] .page {
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    html[data-theme="retro"] .hero {
+      border: 3px outset #ffffff;
+      background: linear-gradient(90deg, #000080, #0080ff);
+      color: #ffffff;
+      padding: 1rem;
+    }
+
+    html[data-theme="retro"] .subtitle {
+      display: inline;
+      padding: 0.18rem 0.32rem;
+      background: #ffff99;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    html[data-theme="retro"] .theme-toggle,
+    html[data-theme="retro"] .status,
+    html[data-theme="retro"] .section,
+    html[data-theme="retro"] .card,
+    html[data-theme="retro"] .icon {
+      border-style: outset;
+      border-width: 3px;
+    }
+
+    html[data-theme="retro"] .theme-button {
+      border-radius: 0;
+    }
+
+    html[data-theme="retro"] .theme-button[aria-pressed="true"] {
+      border: 2px inset #c0c0c0;
+    }
+
+    html[data-theme="retro"] .section-header {
+      padding: 0.25rem 0.42rem;
+      background: #000080;
+      color: #ffffff;
+    }
+
+    html[data-theme="retro"] .section-count {
+      color: #ffff99;
+    }
+
+    html[data-theme="retro"] .card:hover,
+    html[data-theme="retro"] .card:focus-visible {
+      transform: none;
+    }
+
+    html[data-theme="retro"] .label {
+      color: #0000cc;
+      text-decoration: underline;
+    }
+
+    html[data-theme="retro"] .desc {
+      color: #000000;
+    }
+
+    @media (min-width: 760px) {
+      .page {
+        padding: 2rem;
+      }
+
+      .hero {
+        min-height: var(--hero-min-height);
+        align-content: center;
+      }
+
+      .sections {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .title-row {
+        display: grid;
+      }
+
+      .title-actions {
+        justify-items: start;
+      }
+
+      .status {
+        justify-self: start;
+      }
+
+      .theme-toggle {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .theme-button {
+        flex: 1;
+      }
+
+      .section {
+        padding: 0.85rem;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: 5.8rem;
+        padding: 0.92rem;
+      }
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>homebox</h1>
-    <p>Local tools and apps on the home server.</p>
+  <main class="page">
+    <header class="hero">
+      <div class="title-row">
+        <h1>homebox</h1>
+        <div class="title-actions">
+          <div class="theme-toggle" aria-label="Theme">
+            <button class="theme-button" type="button" data-theme-choice="modern" aria-pressed="true">Modern</button>
+            <button class="theme-button" type="button" data-theme-choice="retro" aria-pressed="false">90s</button>
+          </div>
+          <div class="status" aria-label="Tailscale network access">
+            <span class="status-dot" aria-hidden="true"></span>
+            Tailscale ready
+          </div>
+        </div>
+      </div>
+      <p class="subtitle">Local tools, services, and notes for the home server at 100.78.92.57.</p>
+    </header>
 
-    <div class="grid">
-      <a href="http://192.168.1.20:8081/admin">
-        <div class="label">Pi-hole</div>
-        <div class="desc">DNS filtering and ad blocking</div>
-      </a>
+    <div class="sections" aria-label="Homebox dashboard sections">
+      <section class="section" aria-labelledby="monitoring-title">
+        <div class="section-header">
+          <h2 id="monitoring-title">Monitoring</h2>
+          <span class="section-count">1 service</span>
+        </div>
+        <div class="cards">
+          <a class="card" href="http://100.78.92.57:3001">
+            <span class="icon monitoring" aria-hidden="true">U</span>
+            <span>
+              <span class="label">Uptime Kuma</span>
+              <span class="desc">Service status monitoring</span>
+              <span class="meta">100.78.92.57:3001</span>
+            </span>
+          </a>
+        </div>
+      </section>
 
-      <a href="https://192.168.1.20:9090">
-        <div class="label">Cockpit</div>
-        <div class="desc">Server admin dashboard</div>
-      </a>
+      <section class="section" aria-labelledby="admin-title">
+        <div class="section-header">
+          <h2 id="admin-title">Server Admin</h2>
+          <span class="section-count">2 services</span>
+        </div>
+        <div class="cards">
+          <a class="card" href="https://100.78.92.57:9090">
+            <span class="icon admin" aria-hidden="true">C</span>
+            <span>
+              <span class="label">Cockpit</span>
+              <span class="desc">Server admin dashboard</span>
+              <span class="meta">100.78.92.57:9090</span>
+            </span>
+          </a>
 
-      <a href="http://192.168.1.20:3001">
-        <div class="label">Uptime Kuma</div>
-        <div class="desc">Service status monitoring</div>
-      </a>
+          <a class="card" href="http://100.78.92.57:8081/admin">
+            <span class="icon admin" aria-hidden="true">P</span>
+            <span>
+              <span class="label">Pi-hole</span>
+              <span class="desc">DNS filtering and ad blocking</span>
+              <span class="meta">100.78.92.57:8081/admin</span>
+            </span>
+          </a>
+        </div>
+      </section>
 
-      <a href="http://192.168.1.20:8090">
-        <div class="label">Weight Tracker</div>
-        <div class="desc">Personal weight and BMI app</div>
-      </a>
+      <section class="section" aria-labelledby="apps-title">
+        <div class="section-header">
+          <h2 id="apps-title">Apps</h2>
+          <span class="section-count">1 app</span>
+        </div>
+        <div class="cards">
+          <a class="card" href="http://100.78.92.57:8090">
+            <span class="icon apps" aria-hidden="true">W</span>
+            <span>
+              <span class="label">Weight Tracker</span>
+              <span class="desc">Personal weight and BMI app</span>
+              <span class="meta">100.78.92.57:8090</span>
+            </span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="docs-title">
+        <div class="section-header">
+          <h2 id="docs-title">Docs</h2>
+          <span class="section-count">1 note</span>
+        </div>
+        <div class="cards">
+          <a class="card" href="./AGENTS.md">
+            <span class="icon docs" aria-hidden="true">D</span>
+            <span>
+              <span class="label">Dashboard Notes</span>
+              <span class="desc">Local notes for this static homebox page</span>
+              <span class="meta">/AGENTS.md</span>
+            </span>
+          </a>
+        </div>
+      </section>
     </div>
   </main>
+  <script>
+    (function () {
+      var buttons = document.querySelectorAll("[data-theme-choice]");
+
+      function saveTheme(theme) {
+        document.cookie = "homeboxTheme=" + theme + "; max-age=31536000; path=/; SameSite=Lax";
+      }
+
+      function setTheme(theme, shouldSave) {
+        document.documentElement.dataset.theme = theme;
+        buttons.forEach(function (button) {
+          button.setAttribute("aria-pressed", String(button.dataset.themeChoice === theme));
+        });
+
+        if (shouldSave) {
+          saveTheme(theme);
+        }
+      }
+
+      buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          setTheme(button.dataset.themeChoice, true);
+        });
+      });
+
+      setTheme(document.documentElement.dataset.theme || "modern", false);
+    }());
+  </script>
 </body>
 </html>
