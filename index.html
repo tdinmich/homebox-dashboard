@@ -590,7 +590,12 @@
           <div class="card">
             <span class="icon apps" aria-hidden="true">T</span>
             <span class="card-content">
-              <a class="card-title-link" href="http://192.168.1.20:3002">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:3002"
+                data-lan-href="http://192.168.1.20:3002"
+                data-tailscale-href="http://100.78.92.57:3002"
+              >
                 <span class="label">TomGPT</span>
               </a>
               <span class="desc">Local private LLM chat powered by Ollama + Open WebUI</span>
@@ -624,9 +629,18 @@
   <script>
     (function () {
       var buttons = document.querySelectorAll("[data-theme-choice]");
+      var adaptiveLinks = document.querySelectorAll("[data-lan-href][data-tailscale-href]");
 
       function saveTheme(theme) {
         document.cookie = "homeboxTheme=" + theme + "; max-age=31536000; path=/; SameSite=Lax";
+      }
+
+      function setAdaptiveLinks() {
+        var useTailscale = window.location.hostname === "100.78.92.57";
+
+        adaptiveLinks.forEach(function (link) {
+          link.href = useTailscale ? link.dataset.tailscaleHref : link.dataset.lanHref;
+        });
       }
 
       function setTheme(theme, shouldSave) {
@@ -646,6 +660,7 @@
         });
       });
 
+      setAdaptiveLinks();
       setTheme(document.documentElement.dataset.theme || "modern", false);
     }());
   </script>
