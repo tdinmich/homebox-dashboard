@@ -535,14 +535,25 @@
           <span class="section-count">1 service</span>
         </div>
         <div class="cards">
-          <a class="card" href="http://100.78.92.57:3001">
+          <div class="card">
             <span class="icon monitoring" aria-hidden="true">U</span>
-            <span>
-              <span class="label">Uptime Kuma</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:3001"
+                data-lan-href="http://192.168.1.20:3001"
+                data-tailscale-href="http://100.78.92.57:3001"
+              >
+                <span class="label">Uptime Kuma</span>
+              </a>
               <span class="desc">Service status monitoring</span>
-              <span class="meta">100.78.92.57:3001</span>
+              <span class="meta">Port 3001</span>
+              <span class="link-row" aria-label="Uptime Kuma service links">
+                <a class="service-link" href="http://192.168.1.20:3001">LAN 192.168.1.20:3001</a>
+                <a class="service-link" href="http://100.78.92.57:3001">Tailscale 100.78.92.57:3001</a>
+              </span>
             </span>
-          </a>
+          </div>
         </div>
       </section>
 
@@ -552,54 +563,103 @@
           <span class="section-count">2 services</span>
         </div>
         <div class="cards">
-          <a class="card" href="https://100.78.92.57:9090">
+          <div class="card">
             <span class="icon admin" aria-hidden="true">C</span>
-            <span>
-              <span class="label">Cockpit</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="https://192.168.1.20:9090"
+                data-lan-href="https://192.168.1.20:9090"
+                data-tailscale-href="https://100.78.92.57:9090"
+              >
+                <span class="label">Cockpit</span>
+              </a>
               <span class="desc">Server admin dashboard</span>
-              <span class="meta">100.78.92.57:9090</span>
+              <span class="meta">Port 9090</span>
+              <span class="link-row" aria-label="Cockpit service links">
+                <a class="service-link" href="https://192.168.1.20:9090">LAN 192.168.1.20:9090</a>
+                <a class="service-link" href="https://100.78.92.57:9090">Tailscale 100.78.92.57:9090</a>
+              </span>
             </span>
-          </a>
+          </div>
 
-          <a class="card" href="http://100.78.92.57:8081/admin">
+          <div class="card">
             <span class="icon admin" aria-hidden="true">P</span>
-            <span>
-              <span class="label">Pi-hole</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:8081/admin"
+                data-lan-href="http://192.168.1.20:8081/admin"
+                data-tailscale-href="http://100.78.92.57:8081/admin"
+              >
+                <span class="label">Pi-hole</span>
+              </a>
               <span class="desc">DNS filtering and ad blocking</span>
-              <span class="meta">100.78.92.57:8081/admin</span>
+              <span class="meta">Port 8081</span>
+              <span class="link-row" aria-label="Pi-hole service links">
+                <a class="service-link" href="http://192.168.1.20:8081/admin">LAN 192.168.1.20:8081/admin</a>
+                <a class="service-link" href="http://100.78.92.57:8081/admin">Tailscale 100.78.92.57:8081/admin</a>
+              </span>
             </span>
-          </a>
+          </div>
         </div>
       </section>
 
       <section class="section" aria-labelledby="apps-title">
         <div class="section-header">
           <h2 id="apps-title">Apps</h2>
-          <span class="section-count">5 apps</span>
+          <span class="section-count">6 apps</span>
         </div>
         <div class="cards">
-          <a class="card" href="http://100.78.92.57:8090">
+          <div class="card">
             <span class="icon apps" aria-hidden="true">W</span>
-            <span>
-              <span class="label">Weight Tracker</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:8090"
+                data-lan-href="http://192.168.1.20:8090"
+                data-tailscale-href="http://100.78.92.57:8090"
+              >
+                <span class="label">Weight Tracker</span>
+              </a>
               <span class="desc">Personal weight and BMI app</span>
-              <span class="meta">100.78.92.57:8090</span>
+              <span class="meta">Port 8090</span>
+              <span class="link-row" aria-label="Weight Tracker service links">
+                <a class="service-link" href="http://192.168.1.20:8090">LAN 192.168.1.20:8090</a>
+                <a class="service-link" href="http://100.78.92.57:8090">Tailscale 100.78.92.57:8090</a>
+              </span>
             </span>
-          </a>
+          </div>
 
-          <a class="card" href="http://100.78.92.57:3003">
+          <div class="card">
             <span class="icon apps" aria-hidden="true">P</span>
-            <span>
-              <span class="label">Photo Stream</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:3003"
+                data-lan-href="http://192.168.1.20:3003"
+                data-tailscale-href="http://100.78.92.57:3003"
+              >
+                <span class="label">Photo Stream</span>
+              </a>
               <span class="desc">Private shared photo stream</span>
-              <span class="meta">100.78.92.57:3003</span>
+              <span class="meta">Port 3003</span>
+              <span class="link-row" aria-label="Photo Stream service links">
+                <a class="service-link" href="http://192.168.1.20:3003">LAN 192.168.1.20:3003</a>
+                <a class="service-link" href="http://100.78.92.57:3003">Tailscale 100.78.92.57:3003</a>
+              </span>
             </span>
-          </a>
+          </div>
 
           <div class="card">
             <span class="icon apps" aria-hidden="true">R</span>
             <span class="card-content">
-              <a class="card-title-link" href="http://192.168.1.20:3004">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:3004"
+                data-lan-href="http://192.168.1.20:3004"
+                data-tailscale-href="http://100.78.92.57:3004"
+              >
                 <span class="label">Reframe Journal</span>
               </a>
               <span class="desc">Private guided journal for reframing, gratitude, mood check-ins, typed entries, and handwritten pages. Handwriting saves locally on homebox.</span>
@@ -611,14 +671,45 @@
             </span>
           </div>
 
-          <a class="card" href="http://100.78.92.57:8000">
-            <span class="icon apps" aria-hidden="true">N</span>
-            <span>
-              <span class="label">Paperless-ngx</span>
-              <span class="desc">Document archive and search</span>
-              <span class="meta">100.78.92.57:8000</span>
+          <div class="card">
+            <span class="icon apps" aria-hidden="true">M</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:3005"
+                data-lan-href="http://192.168.1.20:3005"
+                data-tailscale-href="http://100.78.92.57:3005"
+              >
+                <span class="label">Mealie</span>
+              </a>
+              <span class="desc">Recipe manager and meal planning app</span>
+              <span class="meta">Port 3005</span>
+              <span class="link-row" aria-label="Mealie service links">
+                <a class="service-link" href="http://192.168.1.20:3005">LAN 192.168.1.20:3005</a>
+                <a class="service-link" href="http://100.78.92.57:3005">Tailscale 100.78.92.57:3005</a>
+              </span>
             </span>
-          </a>
+          </div>
+
+          <div class="card">
+            <span class="icon apps" aria-hidden="true">N</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:8000"
+                data-lan-href="http://192.168.1.20:8000"
+                data-tailscale-href="http://100.78.92.57:8000"
+              >
+                <span class="label">Paperless-ngx</span>
+              </a>
+              <span class="desc">Document archive and search</span>
+              <span class="meta">Port 8000</span>
+              <span class="link-row" aria-label="Paperless-ngx service links">
+                <a class="service-link" href="http://192.168.1.20:8000">LAN 192.168.1.20:8000</a>
+                <a class="service-link" href="http://100.78.92.57:8000">Tailscale 100.78.92.57:8000</a>
+              </span>
+            </span>
+          </div>
 
           <div class="card">
             <span class="icon apps" aria-hidden="true">T</span>
@@ -632,6 +723,7 @@
                 <span class="label">TomGPT</span>
               </a>
               <span class="desc">Local private LLM chat powered by Ollama + Open WebUI</span>
+              <span class="meta">Port 3002</span>
               <span class="link-row" aria-label="TomGPT service links">
                 <a class="service-link" href="http://192.168.1.20:3002">LAN 192.168.1.20:3002</a>
                 <a class="service-link" href="http://100.78.92.57:3002">Tailscale 100.78.92.57:3002</a>
