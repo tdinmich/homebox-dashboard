@@ -34,6 +34,9 @@ Current dashboard services:
 - Mealie: Recipe manager and meal planning app.
   - LAN: http://192.168.1.20:3005
   - Tailscale: http://100.78.92.57:3005
+- Recipe Forge: AI-assisted recipe library from local PDFs.
+  - LAN: http://192.168.1.20:3006
+  - Tailscale: http://100.78.92.57:3006
 - Paperless-ngx: Document archive and search.
   - LAN: http://192.168.1.20:8000
   - Tailscale: http://100.78.92.57:8000
