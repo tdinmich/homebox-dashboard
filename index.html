@@ -470,6 +470,10 @@
       .sections {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+
+      .section-wide {
+        grid-column: 1 / -1;
+      }
     }
 
     @media (max-width: 520px) {
@@ -519,13 +523,13 @@
             <button class="theme-button" type="button" data-theme-choice="modern" aria-pressed="true">Modern</button>
             <button class="theme-button" type="button" data-theme-choice="retro" aria-pressed="false">90s</button>
           </div>
-          <div class="status" aria-label="Tailscale network access">
+          <div class="status" aria-label="Private network access">
             <span class="status-dot" aria-hidden="true"></span>
-            Tailscale ready
+            LAN + Tailscale
           </div>
         </div>
       </div>
-      <p class="subtitle">Local tools, services, and notes for the home server at 100.78.92.57.</p>
+      <p class="subtitle">Private tools, family apps, and server controls—available at home or through Tailscale.</p>
     </header>
 
     <div class="sections" aria-label="Homebox dashboard sections">
@@ -605,10 +609,10 @@
         </div>
       </section>
 
-      <section class="section" aria-labelledby="apps-title">
+      <section class="section section-wide" aria-labelledby="apps-title">
         <div class="section-header">
-          <h2 id="apps-title">Apps</h2>
-          <span class="section-count">7 apps</span>
+          <h2 id="apps-title">Household Apps</h2>
+          <span class="section-count">9 apps</span>
         </div>
         <div class="cards">
           <div class="card">
@@ -682,11 +686,31 @@
               >
                 <span class="label">Mealie</span>
               </a>
-              <span class="desc">Recipe manager and meal planning app</span>
+              <span class="desc">Recipe manager and meal-planning alternative under evaluation</span>
               <span class="meta">Port 3005</span>
               <span class="link-row" aria-label="Mealie service links">
                 <a class="service-link" href="http://192.168.1.20:3005">LAN 192.168.1.20:3005</a>
                 <a class="service-link" href="http://100.78.92.57:3005">Tailscale 100.78.92.57:3005</a>
+              </span>
+            </span>
+          </div>
+
+          <div class="card">
+            <span class="icon apps" aria-hidden="true">T</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:3007"
+                data-lan-href="http://192.168.1.20:3007"
+                data-tailscale-href="http://100.78.92.57:3007"
+              >
+                <span class="label">Tandoor Recipes</span>
+              </a>
+              <span class="desc">Alternative recipe library retained for comparison and evaluation</span>
+              <span class="meta">Port 3007</span>
+              <span class="link-row" aria-label="Tandoor Recipes service links">
+                <a class="service-link" href="http://192.168.1.20:3007">LAN 192.168.1.20:3007</a>
+                <a class="service-link" href="http://100.78.92.57:3007">Tailscale 100.78.92.57:3007</a>
               </span>
             </span>
           </div>
@@ -702,7 +726,7 @@
               >
                 <span class="label">Recipe Forge</span>
               </a>
-              <span class="desc">AI-assisted recipe library from local PDFs</span>
+              <span class="desc">Primary recipe and cocktail library with AI-assisted imports</span>
               <span class="meta">Port 3006</span>
               <span class="link-row" aria-label="Recipe Forge service links">
                 <a class="service-link" href="http://192.168.1.20:3006">LAN 192.168.1.20:3006</a>
@@ -740,9 +764,9 @@
                 data-lan-href="http://192.168.1.20:3002"
                 data-tailscale-href="http://100.78.92.57:3002"
               >
-                <span class="label">TomGPT</span>
+                <span class="label">Open WebUI / TomGPT</span>
               </a>
-              <span class="desc">Local private LLM chat powered by Ollama + Open WebUI</span>
+              <span class="desc">Local model admin and chat playground powered by Ollama</span>
               <span class="meta">Port 3002</span>
               <span class="link-row" aria-label="TomGPT service links">
                 <a class="service-link" href="http://192.168.1.20:3002">LAN 192.168.1.20:3002</a>
@@ -750,15 +774,132 @@
               </span>
             </span>
           </div>
+
+          <div class="card">
+            <span class="icon apps" aria-hidden="true">L</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:3012"
+                data-lan-href="http://192.168.1.20:3012"
+                data-tailscale-href="http://100.78.92.57:3012"
+              >
+                <span class="label">LibreChat</span>
+              </a>
+              <span class="desc">ChatGPT-style frontend for Homebox and Windows GPU models</span>
+              <span class="meta">Port 3012</span>
+              <span class="link-row" aria-label="LibreChat service links">
+                <a class="service-link" href="http://192.168.1.20:3012">LAN 192.168.1.20:3012</a>
+                <a class="service-link" href="http://100.78.92.57:3012">Tailscale 100.78.92.57:3012</a>
+              </span>
+            </span>
+          </div>
         </div>
       </section>
 
-      <section class="section" aria-labelledby="docs-title">
+      <section class="section section-wide" aria-labelledby="arcade-title">
         <div class="section-header">
-          <h2 id="docs-title">Docs</h2>
-          <span class="section-count">1 note</span>
+          <h2 id="arcade-title">Family Arcade</h2>
+          <span class="section-count">4 games</span>
         </div>
         <div class="cards">
+          <div class="card">
+            <span class="icon apps" aria-hidden="true">C</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:3008"
+                data-lan-href="http://192.168.1.20:3008"
+                data-tailscale-href="http://100.78.92.57:3008"
+              >
+                <span class="label">Circle Run</span>
+              </a>
+              <span class="desc">Stable family edition of the neon arcade maze runner</span>
+              <span class="meta">Port 3008</span>
+              <span class="link-row" aria-label="Circle Run service links">
+                <a class="service-link" href="http://192.168.1.20:3008">LAN 192.168.1.20:3008</a>
+                <a class="service-link" href="http://100.78.92.57:3008">Tailscale 100.78.92.57:3008</a>
+              </span>
+            </span>
+          </div>
+
+          <div class="card">
+            <span class="icon apps" aria-hidden="true">H</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:3009"
+                data-lan-href="http://192.168.1.20:3009"
+                data-tailscale-href="http://100.78.92.57:3009"
+              >
+                <span class="label">Helena's Run</span>
+              </a>
+              <span class="desc">Experimental maze adventure with characters, levels, and power-ups</span>
+              <span class="meta">Port 3009</span>
+              <span class="link-row" aria-label="Helena's Run service links">
+                <a class="service-link" href="http://192.168.1.20:3009">LAN 192.168.1.20:3009</a>
+                <a class="service-link" href="http://100.78.92.57:3009">Tailscale 100.78.92.57:3009</a>
+              </span>
+            </span>
+          </div>
+
+          <div class="card">
+            <span class="icon apps" aria-hidden="true">B</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:3010"
+                data-lan-href="http://192.168.1.20:3010"
+                data-tailscale-href="http://100.78.92.57:3010"
+              >
+                <span class="label">Bumper Dots</span>
+              </a>
+              <span class="desc">Local multiplayer bumper arena game</span>
+              <span class="meta">Port 3010</span>
+              <span class="link-row" aria-label="Bumper Dots service links">
+                <a class="service-link" href="http://192.168.1.20:3010">LAN 192.168.1.20:3010</a>
+                <a class="service-link" href="http://100.78.92.57:3010">Tailscale 100.78.92.57:3010</a>
+              </span>
+            </span>
+          </div>
+
+          <div class="card">
+            <span class="icon apps" aria-hidden="true">V</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.20:3011"
+                data-lan-href="http://192.168.1.20:3011"
+                data-tailscale-href="http://100.78.92.57:3011"
+              >
+                <span class="label">Thomas Bear's Volley Clash</span>
+              </a>
+              <span class="desc">Multiplayer family volleyball and tennis with bots and phone controls</span>
+              <span class="meta">Port 3011</span>
+              <span class="link-row" aria-label="Thomas Bear's Volley Clash service links">
+                <a class="service-link" href="http://192.168.1.20:3011">LAN 192.168.1.20:3011</a>
+                <a class="service-link" href="http://100.78.92.57:3011">Tailscale 100.78.92.57:3011</a>
+              </span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-wide" aria-labelledby="docs-title">
+        <div class="section-header">
+          <h2 id="docs-title">Docs</h2>
+          <span class="section-count">2 notes</span>
+        </div>
+        <div class="cards">
+          <a class="card" href="./HOMEBOX_MASTER_PROJECT_2026-06-15.md">
+            <span class="icon docs" aria-hidden="true">M</span>
+            <span>
+              <span class="label">Homebox Master Project</span>
+              <span class="desc">Living service map, architecture notes, commands, and priorities</span>
+              <span class="meta">Updated June 15, 2026</span>
+            </span>
+          </a>
+
           <a class="card" href="./AGENTS.md">
             <span class="icon docs" aria-hidden="true">D</span>
             <span>
