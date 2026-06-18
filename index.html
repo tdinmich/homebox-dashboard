@@ -396,6 +396,42 @@
       text-decoration: underline;
     }
 
+    .action-button {
+      min-height: 2.45rem;
+      margin-top: 0.75rem;
+      padding: 0.58rem 0.82rem;
+      border: 1px solid var(--card-hover-border);
+      border-radius: var(--card-radius);
+      background: var(--blue);
+      color: #0c1722;
+      font: inherit;
+      font-size: 0.86rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .action-button:hover,
+    .action-button:focus-visible {
+      filter: brightness(1.08);
+      outline: 2px solid var(--blue);
+      outline-offset: 2px;
+    }
+
+    .action-button:disabled {
+      cursor: wait;
+      filter: grayscale(0.45);
+      opacity: 0.72;
+    }
+
+    .action-status {
+      display: block;
+      min-height: 1.1rem;
+      margin-top: 0.55rem;
+      color: var(--meta-color);
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
     html[data-theme="retro"] .page {
       margin-top: 0.5rem;
       margin-bottom: 0.5rem;
@@ -420,7 +456,8 @@
     html[data-theme="retro"] .status,
     html[data-theme="retro"] .section,
     html[data-theme="retro"] .card,
-    html[data-theme="retro"] .icon {
+    html[data-theme="retro"] .icon,
+    html[data-theme="retro"] .action-button {
       border-style: outset;
       border-width: 3px;
     }
@@ -603,6 +640,44 @@
               <span class="link-row" aria-label="Pi-hole service links">
                 <a class="service-link" href="http://192.168.1.20:8081/admin">LAN 192.168.1.20:8081/admin</a>
                 <a class="service-link" href="http://100.78.92.57:8081/admin">Tailscale 100.78.92.57:8081/admin</a>
+              </span>
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-wide" aria-labelledby="gpu-title">
+        <div class="section-header">
+          <h2 id="gpu-title">Colin GPU PC</h2>
+          <span class="section-count">2 controls</span>
+        </div>
+        <div class="cards">
+          <div class="card">
+            <span class="icon admin" aria-hidden="true">⚡</span>
+            <span class="card-content">
+              <span class="label">Wake GPU PC</span>
+              <span class="desc">Send a Wake-on-LAN signal from Homebox to Colin's Windows GPU computer</span>
+              <button class="action-button" type="button" data-gpu-wake>Wake Colin GPU PC</button>
+              <span class="action-status" data-gpu-status role="status" aria-live="polite">Checking PC status…</span>
+            </span>
+          </div>
+
+          <div class="card">
+            <span class="icon apps" aria-hidden="true">C</span>
+            <span class="card-content">
+              <a
+                class="card-title-link"
+                href="http://192.168.1.35:8188"
+                data-lan-href="http://192.168.1.35:8188"
+                data-tailscale-href="http://100.96.199.102:8188"
+              >
+                <span class="label">Colin's ComfyUI</span>
+              </a>
+              <span class="desc">Image-generation workspace running on Colin's GPU PC</span>
+              <span class="meta">Port 8188 · PC must be awake</span>
+              <span class="link-row" aria-label="Colin's ComfyUI service links">
+                <a class="service-link" href="http://192.168.1.35:8188">LAN 192.168.1.35:8188</a>
+                <a class="service-link" href="http://100.96.199.102:8188">Tailscale 100.96.199.102:8188</a>
               </span>
             </span>
           </div>
@@ -916,6 +991,8 @@
     (function () {
       var buttons = document.querySelectorAll("[data-theme-choice]");
       var adaptiveLinks = document.querySelectorAll("[data-lan-href][data-tailscale-href]");
+      var gpuWakeButton = document.querySelector("[data-gpu-wake]");
+      var gpuStatus = document.querySelector("[data-gpu-status]");
 
       function saveTheme(theme) {
         document.cookie = "homeboxTheme=" + theme + "; max-age=31536000; path=/; SameSite=Lax";
@@ -940,11 +1017,86 @@
         }
       }
 
+      function gpuWakeBaseUrl() {
+        return window.location.protocol + "//" + window.location.hostname + ":3013";
+      }
+
+      function setGpuStatus(message) {
+        if (gpuStatus) {
+          gpuStatus.textContent = message;
+        }
+      }
+
+      function checkGpuStatus() {
+        return fetch(gpuWakeBaseUrl() + "/status", {
+          cache: "no-store"
+        })
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error("Status service unavailable");
+            }
+            return response.json();
+          })
+          .then(function (result) {
+            setGpuStatus(result.online ? "PC is awake and GPU services are responding." : "PC appears to be asleep.");
+            return result.online;
+          })
+          .catch(function () {
+            setGpuStatus("Wake service is not running on Homebox yet.");
+            return false;
+          });
+      }
+
+      function watchForGpu() {
+        var checksRemaining = 12;
+        var timer = window.setInterval(function () {
+          checkGpuStatus().then(function (online) {
+            checksRemaining -= 1;
+            if (online || checksRemaining <= 0) {
+              window.clearInterval(timer);
+              gpuWakeButton.disabled = false;
+            }
+          });
+        }, 5000);
+      }
+
       buttons.forEach(function (button) {
         button.addEventListener("click", function () {
           setTheme(button.dataset.themeChoice, true);
         });
       });
+
+      if (gpuWakeButton) {
+        gpuWakeButton.addEventListener("click", function () {
+          gpuWakeButton.disabled = true;
+          setGpuStatus("Sending wake signal…");
+
+          fetch(gpuWakeBaseUrl() + "/wake", {
+            method: "POST",
+            headers: {
+              "X-Homebox-Action": "wake-colin-gpu"
+            }
+          })
+            .then(function (response) {
+              return response.json().then(function (result) {
+                if (!response.ok) {
+                  throw new Error(result.message || "Wake request failed");
+                }
+                return result;
+              });
+            })
+            .then(function (result) {
+              setGpuStatus(result.message + " Waiting for GPU services…");
+              watchForGpu();
+            })
+            .catch(function (error) {
+              setGpuStatus(error.message || "Could not send wake signal.");
+              gpuWakeButton.disabled = false;
+            });
+        });
+
+        checkGpuStatus();
+      }
 
       setAdaptiveLinks();
       setTheme(document.documentElement.dataset.theme || "modern", false);

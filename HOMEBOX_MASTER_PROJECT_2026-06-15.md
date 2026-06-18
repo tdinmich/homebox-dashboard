@@ -149,6 +149,7 @@ Verify live state before relying on this table for changes. Some ports come from
 | Bumper Dots | `3010` / `http://192.168.1.20:3010` | `/srv/containers/bumper-dots`; multiplayer phone arcade game. |
 | Thomas Bear's Volley Clash | `3011` / `http://192.168.1.20:3011` | `/srv/containers/arcade-tennis`; multiplayer family volleyball/tennis game. |
 | LibreChat | `3012` / `http://192.168.1.20:3012` | `/srv/containers/librechat`; newer ChatGPT-like frontend under testing. |
+| Colin GPU wake service | `3013` / `http://192.168.1.20:3013` | `/srv/apps/gpu-wake`; private dashboard helper that sends Wake-on-LAN to Colin's GPU PC. |
 | Paperless-ngx | `8000` / `http://192.168.1.20:8000` | `/srv/containers/paperless-ngx`; document archive/search. |
 | Weight Tracker | `8090` / `http://192.168.1.20:8090` | `/srv/containers/weight-tracker`; verify current port if needed. |
 | Ollama raw API, Homebox | `127.0.0.1:11434` | In `/srv/containers/llm`; should generally stay localhost-bound. |
@@ -552,6 +553,8 @@ Machine:
 - Reserved LAN IP: `192.168.1.35`
 - Wi-Fi MAC for Wake-on-LAN: `E4-C7-67-06-2F-AC`
 - Ollama API endpoint: `http://192.168.1.35:11434`
+- ComfyUI LAN URL: `http://192.168.1.35:8188`
+- ComfyUI Tailscale URL: `http://100.96.199.102:8188`
 - GPU: son's Windows gaming PC with RTX 5070 Ti-class GPU
 - Ollama configured on Windows with `OLLAMA_HOST=0.0.0.0:11434`
 
@@ -566,6 +569,23 @@ Wake command:
 
 ```bash
 wakeonlan -i 192.168.1.255 -p 9 E4:C7:67:06:2F:AC
+```
+
+Homebox dashboard wake helper:
+
+```text
+/srv/apps/gpu-wake
+http://192.168.1.20:3013
+http://100.78.92.57:3013
+```
+
+The dashboard includes a button that calls this private helper to send the
+Wake-on-LAN packet, plus adaptive LAN/Tailscale links to ComfyUI. Deploy it
+with:
+
+```bash
+cd /srv/apps/gpu-wake
+sudo docker compose up -d --build
 ```
 
 Wake and test:
@@ -1704,7 +1724,7 @@ Highest-value infrastructure:
 1. Create a real backup plan and test restore for Recipe Forge, Photo Stream, Reframe Journal, Paperless, Pi-hole, and LibreChat.
 2. Add/update dashboard entry for LibreChat if not already present.
 3. Add Uptime Kuma monitors for LibreChat and key game apps.
-4. Make a small `wake-gpu-and-check.sh` helper on Homebox.
+4. Keep the dashboard GPU wake helper healthy and add it to Uptime Kuma if it becomes a regular dependency.
 5. Consider an LLM router/fallback layer so Recipe Forge/Open WebUI/LibreChat can prefer GPU when awake and fall back to local Ollama.
 6. Document any actual Docker restart policies and fill gaps where services do not restart after reboot.
 
